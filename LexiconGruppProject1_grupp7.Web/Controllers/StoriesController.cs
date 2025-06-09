@@ -1,7 +1,9 @@
 ﻿using LexiconGruppProject1_grupp7.Application.Stories.Interfaces;
 using LexiconGruppProject1_grupp7.Domain.Entities;
 using LexiconGruppProject1_grupp7.Web.Views.Stories;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace LexiconGruppProject1_grupp7.Web.Controllers
 {
