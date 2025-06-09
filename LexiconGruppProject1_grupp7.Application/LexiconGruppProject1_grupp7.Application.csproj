@@ -7,11 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Stories\Interfaces\" />
-    <Folder Include="Stories\Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\LexiconGruppProject1_grupp7.Domain\LexiconGruppProject1_grupp7.Domain.csproj" />
   </ItemGroup>
 
