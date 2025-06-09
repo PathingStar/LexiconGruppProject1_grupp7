@@ -1,14 +1,14 @@
 ﻿@model IndexVM
 
 @{
-    ViewBag.Title = "Employees List";
+    ViewBag.Title = "List of Stories";
 }
 
 <ul>
-    @foreach (var employee in Model.StoryItems)
+    @foreach (var Stories in Model.StoryItems)
     {
         <li>
-            <a asp-controller="Employees" asp-action="Details" asp-route-id="@employee.Id" style="color:@(employee.ShowAsHighlighted ? "red" : "inherit");">@employee.Name, @employee.CompanyName</a>
+            <a asp-controller="Stories" asp-action="Details" asp-route-id="@Stories.StoryId"> @Stories.StoryTitle </a>
         </li>
     }
 </ul>
