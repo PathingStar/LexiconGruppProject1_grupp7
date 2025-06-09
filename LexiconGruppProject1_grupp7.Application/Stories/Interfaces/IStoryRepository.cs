@@ -5,5 +5,6 @@ namespace LexiconGruppProject1_grupp7.Application.Stories.Interfaces
     public interface IStoryRepository
     {
         Task<Story[]> GetAllAsync();
+        Task<Story> GetByIdAsync(int id);
     }
 }

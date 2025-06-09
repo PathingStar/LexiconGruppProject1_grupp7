@@ -14,5 +14,9 @@ namespace LexiconGruppProject1_grupp7.Application.Stories.Services
         {
             return await storyRepository.GetAllAsync();
         }
+        public async Task<Story> GetStoryByIdAsync(int id)
+        {
+            return await storyRepository.GetByIdAsync(id);
+        }
     }
 }

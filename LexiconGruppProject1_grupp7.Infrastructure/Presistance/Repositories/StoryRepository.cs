@@ -12,5 +12,7 @@ namespace LexiconGruppProject1_grupp7.Infrastructure.Presistance.Repositories
     public class StoryRepository(ApplicationContext context) : IStoryRepository
     {
         public async Task<Story[]> GetAllAsync() => await context.Stories.ToArrayAsync();
+
+        public async Task<Story> GetByIdAsync(int id) => await context.Stories.FindAsync(id);
     }
 }
