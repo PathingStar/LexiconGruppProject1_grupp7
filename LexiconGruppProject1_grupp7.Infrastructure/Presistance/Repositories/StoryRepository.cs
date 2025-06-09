@@ -14,6 +14,7 @@ namespace LexiconGruppProject1_grupp7.Infrastructure.Presistance.Repositories
         public async Task AddAsync(Story story)
         {
             await context.Stories.AddAsync(story);
+            await context.SaveChangesAsync();
         }
 
         public async Task<Story[]> GetAllAsync() => await context.Stories.ToArrayAsync();
