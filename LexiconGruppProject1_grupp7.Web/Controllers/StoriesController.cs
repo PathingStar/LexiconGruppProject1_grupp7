@@ -33,6 +33,24 @@ namespace LexiconGruppProject1_grupp7.Web.Controllers
             }
             var viewModel = new DetailsVM
             {
+               
+                StoryTitle = story.Title,
+                StoryContent = story.Content,
+               
+            };
+            return View(viewModel);
+        }
+        [Route("stories/{id:int}")]
+        public async Task<IActionResult> Details(int id)
+        {
+            var story = await service.GetStoryByIdAsync(id);
+
+            if (story == null)
+            {
+                return NotFound();
+            }
+            var viewModel = new DetailsVM
+            {
 
                 StoryTitle = story.Title,
                 StoryContent = story.Content,
