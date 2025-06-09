@@ -1,4 +1,5 @@
 ﻿using LexiconGruppProject1_grupp7.Application.Stories.Interfaces;
+using LexiconGruppProject1_grupp7.Web.Views.Stories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LexiconGruppProject1_grupp7.Web.Controllers
@@ -8,7 +9,16 @@ namespace LexiconGruppProject1_grupp7.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var stories = await service.GetAllStoriesAsync();
-            return View(stories);
+            var viewModel = new IndexVM
+            {
+                StoryItems = stories.Select(s => new IndexVM.StoryItemVM
+                {
+                    StoryTitle = s.Title,
+                    StoryId = s.Id
+                }).ToArray()
+            };
+                
+            return View(viewModel);
         }
     }
 }
