@@ -16,6 +16,7 @@ public class Program
         
         builder.Services.AddScoped<IStoryRepository, StoryRepository>();
         builder.Services.AddScoped<IStoryService, StoryService>();
+        builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
         var connString = builder.Configuration.GetConnectionString("DefaultConnection");
 
         builder.Services.AddDbContext<ApplicationContext>(o => o.UseSqlServer(connString));

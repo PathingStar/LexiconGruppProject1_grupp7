@@ -8,20 +8,21 @@ using System.Threading.Tasks;
 
 namespace LexiconGruppProject1_grupp7.Application.Stories.Services
 {
-    public class StoryService(IStoryRepository storyRepository) : IStoryService
+    public class StoryService(IUnitOfWork unitOfWork) : IStoryService
     {
         public async Task AddStoryAsync(Story story)
         {
-            await storyRepository.AddAsync(story);
+            await unitOfWork.StoryRepository.AddAsync(story);
+            await unitOfWork.PersistAsync();
         }
 
         public async Task<Story[]> GetAllStoriesAsync()
         {
-            return await storyRepository.GetAllAsync();
+            return await unitOfWork.StoryRepository.GetAllAsync();
         }
         public async Task<Story> GetStoryByIdAsync(int id)
         {
-            return await storyRepository.GetByIdAsync(id);
+            return await unitOfWork.StoryRepository.GetByIdAsync(id);
         }
     }
 }
