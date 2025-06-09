@@ -33,10 +33,10 @@ namespace LexiconGruppProject1_grupp7.Web.Controllers
             }
             var viewModel = new DetailsVM
             {
-
+               
                 StoryTitle = story.Title,
                 StoryContent = story.Content,
-
+               
             };
             return View(viewModel);
         }
