@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36127.28 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LexiconGruppProject1_grupp7", "LexiconGruppProject1_grupp7\LexiconGruppProject1_grupp7.csproj", "{A72D40FB-25B2-4ACC-A43B-2271886742C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LexiconGruppProject1_grupp7.Domain", "LexiconGruppProject1_grupp7.Domain\LexiconGruppProject1_grupp7.Domain.csproj", "{B0677452-665C-4C8D-9DFE-F178B222AF19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LexiconGruppProject1_grupp7.Application", "LexiconGruppProject1_grupp7.Application\LexiconGruppProject1_grupp7.Application.csproj", "{E3F0BB99-8163-4ABB-A879-A610C31CF9A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LexiconGruppProject1_grupp7.Infrastructure", "LexiconGruppProject1_grupp7.Infrastructure\LexiconGruppProject1_grupp7.Infrastructure.csproj", "{220BDCB9-B65D-4203-B2FE-733EB0A7593B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LexiconGruppProject1_grupp7.Web", "LexiconGruppProject1_grupp7.Web\LexiconGruppProject1_grupp7.Web.csproj", "{22086818-89C9-4A23-830D-16F166D96C75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +17,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A72D40FB-25B2-4ACC-A43B-2271886742C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A72D40FB-25B2-4ACC-A43B-2271886742C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A72D40FB-25B2-4ACC-A43B-2271886742C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A72D40FB-25B2-4ACC-A43B-2271886742C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0677452-665C-4C8D-9DFE-F178B222AF19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0677452-665C-4C8D-9DFE-F178B222AF19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0677452-665C-4C8D-9DFE-F178B222AF19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0677452-665C-4C8D-9DFE-F178B222AF19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3F0BB99-8163-4ABB-A879-A610C31CF9A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3F0BB99-8163-4ABB-A879-A610C31CF9A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3F0BB99-8163-4ABB-A879-A610C31CF9A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3F0BB99-8163-4ABB-A879-A610C31CF9A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{220BDCB9-B65D-4203-B2FE-733EB0A7593B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{220BDCB9-B65D-4203-B2FE-733EB0A7593B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{220BDCB9-B65D-4203-B2FE-733EB0A7593B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{220BDCB9-B65D-4203-B2FE-733EB0A7593B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22086818-89C9-4A23-830D-16F166D96C75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22086818-89C9-4A23-830D-16F166D96C75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22086818-89C9-4A23-830D-16F166D96C75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22086818-89C9-4A23-830D-16F166D96C75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

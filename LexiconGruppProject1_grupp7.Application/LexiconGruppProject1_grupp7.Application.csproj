@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Stories\Interfaces\" />
+    <Folder Include="Stories\Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LexiconGruppProject1_grupp7.Domain\LexiconGruppProject1_grupp7.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
