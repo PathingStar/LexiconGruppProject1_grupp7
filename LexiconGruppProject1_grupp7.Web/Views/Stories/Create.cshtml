@@ -1,0 +1,21 @@
+﻿@model CreateVM
+@{
+    ViewBag.Title = "Create Story";
+}
+<form asp-controller="Stories" asp-action="Create">
+    <label asp-for="StoryTitle"></label>
+    <input asp-for="StoryTitle" />
+    <span asp-validation-for="StoryTitle"></span>
+
+    <label asp-for="StoryContent"></label>
+    <input asp-for="StoryContent" />
+    <span asp-validation-for="StoryContent"></span>
+
+    <input type="submit" value="Create" />
+</form>
+<a asp-controller="stories" asp-action="index">Back</a>
+@section scripts
+{
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+}

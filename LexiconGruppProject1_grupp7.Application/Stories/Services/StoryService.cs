@@ -10,9 +10,18 @@ namespace LexiconGruppProject1_grupp7.Application.Stories.Services
 {
     public class StoryService(IStoryRepository storyRepository) : IStoryService
     {
+        public async Task AddStoryAsync(Story story)
+        {
+            await storyRepository.AddAsync(story);
+        }
+
         public async Task<Story[]> GetAllStoriesAsync()
         {
             return await storyRepository.GetAllAsync();
+        }
+        public async Task<Story> GetStoryByIdAsync(int id)
+        {
+            return await storyRepository.GetByIdAsync(id);
         }
     }
 }
