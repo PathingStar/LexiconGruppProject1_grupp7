@@ -21,4 +21,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LexiconGruppProject1_grupp7.Infrastructure\LexiconGruppProject1_grupp7.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
