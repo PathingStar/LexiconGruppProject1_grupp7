@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LexiconGruppProject1_grupp7.Infrastructure.Presistance;
 
-public class ApplicationUser :IdentityUser
+public class ApplicationUser : IdentityUser
 {
-    public string Bio { get; set; }
+    public string? Bio { get; set; }
 }
