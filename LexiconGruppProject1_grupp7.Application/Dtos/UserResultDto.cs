@@ -8,7 +8,7 @@ namespace LexiconGruppProject1_grupp7.Application.Dtos
 {
     public record UserResultDto(string? ErrorMessage = null)
     {
-        public bool Success => ErrorMessage == null;
+        public bool Succeeded => ErrorMessage == null;
     }
-    
+
 }

@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace LexiconGruppProject1_grupp7.Application.Dtos;
 
-public record UserProfileDto(string Email, string UserName, string? Bio);
+public record UserProfileDto(string Email, string UserName, string? Bio = null);
 
