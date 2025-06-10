@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36127.28 d17.14
+VisualStudioVersion = 17.14.36127.28
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LexiconGruppProject1_grupp7.Domain", "LexiconGruppProject1_grupp7.Domain\LexiconGruppProject1_grupp7.Domain.csproj", "{B0677452-665C-4C8D-9DFE-F178B222AF19}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LexiconGruppProject1_grupp7.Infrastructure", "LexiconGruppProject1_grupp7.Infrastructure\LexiconGruppProject1_grupp7.Infrastructure.csproj", "{220BDCB9-B65D-4203-B2FE-733EB0A7593B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LexiconGruppProject1_grupp7.Web", "LexiconGruppProject1_grupp7.Web\LexiconGruppProject1_grupp7.Web.csproj", "{22086818-89C9-4A23-830D-16F166D96C75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LexiconGruppProject1_grupp7.Terminal", "LexiconGruppProject1_grupp7.Terminal\LexiconGruppProject1_grupp7.Terminal.csproj", "{DB14C94C-F48F-41EB-A6C7-0F15EFB7D778}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{22086818-89C9-4A23-830D-16F166D96C75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22086818-89C9-4A23-830D-16F166D96C75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22086818-89C9-4A23-830D-16F166D96C75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB14C94C-F48F-41EB-A6C7-0F15EFB7D778}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB14C94C-F48F-41EB-A6C7-0F15EFB7D778}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB14C94C-F48F-41EB-A6C7-0F15EFB7D778}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB14C94C-F48F-41EB-A6C7-0F15EFB7D778}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
