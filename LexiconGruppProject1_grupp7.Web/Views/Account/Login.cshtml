@@ -1,10 +1,10 @@
-﻿
-@* 
+﻿@model LexiconGruppProject1_grupp7.Web.Views.Account.LoginVM
+
 <h3>Log In</h3>
 <form asp-controller="Account" asp-action="Login">
-    <label asp-for="Username"></label>
-    <input asp-for="Username" />
-    <span asp-validation-for="Username"></span>
+    <label asp-for="UserName"></label>
+    <input asp-for="UserName" />
+    <span asp-validation-for="UserName"></span>
 
     <label asp-for="Password"></label>
     <input asp-for="Password" />
@@ -12,4 +12,4 @@
     <br />
     <input type="submit" value="Log In" />
 </form>
-<div asp-validation-summary="All"></div> *@
+<div asp-validation-summary="All"></div>

@@ -12,7 +12,6 @@ namespace LexiconGruppProject1_grupp7.Infrastructure.Services;
 
 public class IdentityUserSevice(
     UserManager<ApplicationUser> userManager,
-    RoleManager<ApplicationUser> roleManager,
     SignInManager<ApplicationUser> signInManager)
     : IIdentityUserService
 {

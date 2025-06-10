@@ -3,6 +3,7 @@ using LexiconGruppProject1_grupp7.Application.Stories.Interfaces;
 using LexiconGruppProject1_grupp7.Application.Stories.Services;
 using LexiconGruppProject1_grupp7.Infrastructure.Presistance;
 using LexiconGruppProject1_grupp7.Infrastructure.Presistance.Repositories;
+using LexiconGruppProject1_grupp7.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,10 +15,13 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         builder.Services.AddControllersWithViews();
-        
+
         builder.Services.AddScoped<IStoryRepository, StoryRepository>();
         builder.Services.AddScoped<IStoryService, StoryService>();
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+        builder.Services.AddTransient<IUserService, UserService>();
+        builder.Services.AddTransient<IIdentityUserService, IdentityUserSevice>();
+
         var connString = builder.Configuration.GetConnectionString("DefaultConnection");
         builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
         {
@@ -31,9 +35,9 @@ public class Program
         builder.Services.ConfigureApplicationCookie(o => o.LoginPath = "/login");
 
         builder.Services.AddDbContext<ApplicationContext>(o => o.UseSqlServer(connString));
-        
 
-        
+
+
 
         var app = builder.Build();
         app.UseAuthorization();
