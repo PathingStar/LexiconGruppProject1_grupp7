@@ -28,7 +28,8 @@ namespace LexiconGruppProject1_grupp7.Terminal
         {
             foreach (var item in await StoryService.GetAllStoriesAsync())
             {
-                Console.WriteLine(item.Title + "\n" + item.Content);
+                Console.WriteLine("##### " + item.Title + " #####  \n" + item.Content);
+                Console.WriteLine("####################################################################################");
             }
         }
     }
