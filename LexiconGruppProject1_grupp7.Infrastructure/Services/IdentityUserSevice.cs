@@ -1,4 +1,5 @@
 ﻿using LexiconGruppProject1_grupp7.Application.Dtos;
+using LexiconGruppProject1_grupp7.Application.Stories.Interfaces;
 using LexiconGruppProject1_grupp7.Infrastructure.Presistance;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -13,6 +14,7 @@ public class IdentityUserSevice(
     UserManager<ApplicationUser> userManager,
     RoleManager<ApplicationUser> roleManager,
     SignInManager<ApplicationUser> signInManager)
+    : IIdentityUserService
 {
     public async Task<UserResultDto> CreateUserAsync(UserProfileDto user, string password, bool isAdmin)
     {
