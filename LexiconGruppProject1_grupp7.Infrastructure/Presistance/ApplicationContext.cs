@@ -1,4 +1,6 @@
 ﻿using LexiconGruppProject1_grupp7.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace LexiconGruppProject1_grupp7.Infrastructure.Presistance;
 
-public class ApplicationContext(DbContextOptions<ApplicationContext> options) : DbContext(options)
+public class ApplicationContext(DbContextOptions<ApplicationContext> options) : IdentityDbContext<ApplicationUser, IdentityRole, string>(options)
 {
     public DbSet<Story> Stories { get; set; }
 
