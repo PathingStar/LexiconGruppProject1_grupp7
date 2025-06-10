@@ -1,10 +1,22 @@
-﻿ <!DOCTYPE html>
-    <html>
-    <head>
-        <title>@ViewBag.Title </title>
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title </title>
     <link rel="stylesheet" href="https://unpkg.com/@@picocss/pico@@latest/css/pico.classless.min.css">
-    </head>
-    <body>
+</head>
+<body style="padding: 1rem;">
+    <nav>
+        <a asp-controller="Account" asp-action="UserPage">User</a>
+        <a asp-controller="Account" asp-action="Register">Register</a>
+        @if(User.Identity.IsAuthenticated)
+        {
+            <a asp-controller="Account" asp-action="LogIn">Login</a>
+        } else
+        {
+            <a asp-controller="Account" asp-action="LogIn">LogOut</a>
+
+        }
+    </nav>
         <h1>@ViewBag.Title</h1>
     <div>@RenderBody()</div>
     <footer>&copy; Grupp 7: Stanislav Hallberg, Alberto Nuñez, Tobias Johansson, Mattias persson </footer>

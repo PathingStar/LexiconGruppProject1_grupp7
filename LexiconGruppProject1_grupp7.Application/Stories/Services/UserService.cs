@@ -14,6 +14,12 @@ public class UserService(IIdentityUserService identityUserService) : IUserServic
         return await identityUserService.CreateUserAsync(user, password, isAdmin);
     }
 
+    public async Task<UserProfileDto> GetUserByIdAsync(string userId)
+    {
+
+        return await identityUserService.GetUserByIdAsync(userId);
+    }
+
     public async Task<UserResultDto> SignInAsync(string userName, string password)
     {
         return await identityUserService.SignInAsync(userName, password);

@@ -1,0 +1,15 @@
+﻿@model LexiconGruppProject1_grupp7.Web.Views.Account.UserPageVM
+
+@if (User.Identity!.IsAuthenticated)
+{
+    <p>
+        Välkommen <strong>@Model.UserName @Model.Email @Model.Bio</strong>!<br />
+    </p>
+    
+}
+else
+{
+    <p>Du är inte inloggad...</p>
+}
+
+

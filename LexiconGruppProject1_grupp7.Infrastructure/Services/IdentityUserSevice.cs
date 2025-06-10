@@ -17,7 +17,6 @@ public class IdentityUserSevice(
 {
     public async Task<UserResultDto> CreateUserAsync(UserProfileDto user, string password, bool isAdmin)
     {
-
         var result = await userManager.CreateAsync(new ApplicationUser
         {
             UserName = user.UserName,
@@ -27,6 +26,13 @@ public class IdentityUserSevice(
 
         return new UserResultDto(result.Errors.FirstOrDefault()?.Description);
     }
+
+    public async Task<UserProfileDto> GetUserByIdAsync(string userId)
+    {
+        var applicationUser = await userManager.FindByIdAsync(userId);
+        return new UserProfileDto(applicationUser.Email, applicationUser.UserName, applicationUser.Bio);
+    }
+
     public async Task<UserResultDto> SignInAsync(string userName, string password)
     {
         var result = await signInManager.PasswordSignInAsync(userName, password, false, false);

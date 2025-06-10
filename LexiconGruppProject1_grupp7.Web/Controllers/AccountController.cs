@@ -3,6 +3,7 @@ using LexiconGruppProject1_grupp7.Application.Stories.Interfaces;
 using LexiconGruppProject1_grupp7.Web.Views.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace LexiconGruppProject1_grupp7.Web.Controllers;
 public class AccountController(IUserService userService) : Controller
@@ -52,13 +53,22 @@ public class AccountController(IUserService userService) : Controller
         }
         await userService.SignInAsync(registerVM.UserName, registerVM.Password);
 
-        return RedirectToAction(nameof(User));
+        return RedirectToAction(nameof(UserPage));
     }
     [Authorize]
     [HttpGet("user")]
-    public async Task<IActionResult> User()
+    public async Task<IActionResult> UserPage()
     {
 
-        return View();
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userProfile = await userService.GetUserByIdAsync(userId);
+        var viewModel = new UserPageVM
+        {
+            UserName = User.Identity.Name,
+            Bio = userProfile.Bio,
+            Email = userProfile.Email
+        };
+
+        return View(viewModel);
     }
 }
