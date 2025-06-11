@@ -29,4 +29,7 @@ public class UserService(IIdentityUserService identityUserService) : IUserServic
     {
         await identityUserService.SignOutAsync();
     }
+    public async Task<AdminViewbleUserProfileDto[]> AdminGetAllUsers()    {
+        return await identityUserService.AdminGetAllUsers();
+    }
 }

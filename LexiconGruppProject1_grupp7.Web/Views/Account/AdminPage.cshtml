@@ -1,0 +1,12 @@
+﻿@model AdminPageVM
+@{
+    ViewBag.Title = "Admin Page";
+}
+<ol>
+    @foreach (var item in Model.userVMs)
+    {
+        <li>@item.UserName @item.Email</li>
+    }
+
+</ol>
+

@@ -32,6 +32,17 @@ public class IdentityUserSevice(
         var applicationUser = await userManager.FindByIdAsync(userId);
         return new UserProfileDto(applicationUser.Email, applicationUser.UserName, applicationUser.Bio);
     }
+    public async Task<AdminViewbleUserProfileDto[]> AdminGetAllUsers() 
+    {
+        var users =  userManager.Users.ToArray();
+        return users.Select(u => new AdminViewbleUserProfileDto(
+        
+            u.Id,
+             u.UserName,
+             u.Email)
+            
+        ).ToArray();
+    }
 
     public async Task<UserResultDto> SignInAsync(string userName, string password)
     {

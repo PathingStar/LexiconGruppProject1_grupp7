@@ -3,17 +3,14 @@ using LexiconGruppProject1_grupp7.Application.Stories.Interfaces;
 using LexiconGruppProject1_grupp7.Web.Views.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Security.Claims;
 
 namespace LexiconGruppProject1_grupp7.Web.Controllers;
 public class AccountController(IUserService userService) : Controller
 {
 
-    //[HttpGet("")]
-    //public IActionResult Index()
-    //{
-    //    return 
-    //}
+    
 
     [HttpGet("login")]
     public IActionResult Login()
@@ -87,5 +84,22 @@ public class AccountController(IUserService userService) : Controller
         };
 
         return View(viewModel);
+    }
+    [Authorize]  
+    [Authorize(Roles = "Admin")]
+    [HttpGet("admin")]
+    public async Task<IActionResult> AdminPage()
+    {
+        var users = await userService.AdminGetAllUsers();
+        AdminPageVM adminPageVM = new AdminPageVM
+        {
+            userVMs = users.Select(u => new AdminPageVM.UserVM
+            {
+                Id = u.UserId,
+                UserName = u.UserName,
+                Email = u.Email
+            }).ToArray()
+        };
+        return View(adminPageVM);
     }
 }
