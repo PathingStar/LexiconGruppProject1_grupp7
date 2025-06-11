@@ -2,6 +2,7 @@
 using LexiconGruppProject1_grupp7.Application.Stories.Interfaces;
 using LexiconGruppProject1_grupp7.Web.Views.Account;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Security.Claims;
@@ -58,7 +59,7 @@ public class AccountController(IUserService userService) : Controller
         {
             return View();
         }
-        var result = await userService.CreateUserAsync(new UserProfileDto(registerVM.Email, registerVM.UserName), registerVM.Password, registerVM.AdminAccess);
+        var result = await userService.CreateUserAsync(new UserProfileDto(registerVM.Email, registerVM.UserName), registerVM.Password);
 
         if (!result.Succeeded)
         {
@@ -97,7 +98,8 @@ public class AccountController(IUserService userService) : Controller
             {
                 Id = u.UserId,
                 UserName = u.UserName,
-                Email = u.Email
+                Email = u.Email,
+                AdminAccess = u.isAdmin
             }).ToArray()
         };
         return View(adminPageVM);

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace LexiconGruppProject1_grupp7.Application.Stories.Interfaces;
 public interface IIdentityUserService
 {
-    Task<UserResultDto> CreateUserAsync(UserProfileDto user, string password, bool isAdmin);
+    Task<UserResultDto> CreateUserAsync(UserProfileDto user, string password);
     Task<UserProfileDto> GetUserByIdAsync(string userId);
     Task<UserResultDto> SignInAsync(string userName, string password);
     Task SignOutAsync();

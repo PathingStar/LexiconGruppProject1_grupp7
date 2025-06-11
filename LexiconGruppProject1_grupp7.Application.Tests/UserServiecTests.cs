@@ -21,19 +21,16 @@ namespace LexiconGruppProject1_grupp7.Application.Tests
             var service=new UserService(identityUserService.Object);
             identityUserService.Setup(o => o.CreateUserAsync(
                 It.IsAny<UserProfileDto>(),
-                It.IsAny<string>(),
-                It.IsAny<bool>()))
+                It.IsAny<string>()))
                 .ReturnsAsync(new UserResultDto());
 
-            var response = await service.CreateUserAsync(new UserProfileDto("test@test.com", "testsson", null), "password", false);
+            var response = await service.CreateUserAsync(new UserProfileDto("test@test.com", "testsson", null), "password");
             identityUserService.Verify(o => o.CreateUserAsync(
                 It.Is<UserProfileDto>(x =>
                     x.Email == "test@test.com" &&
                     x.UserName == "testsson"),
                 It.Is<string>(
-                    x=> x == "password"),
-                It.Is<bool>(
-                    x => x == false)
+                    x=> x == "password")
                 ), Times.Once);
 
             Assert.NotNull(response);

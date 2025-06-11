@@ -5,7 +5,13 @@
 <ol>
     @foreach (var item in Model.userVMs)
     {
-        <li>@item.UserName @item.Email</li>
+        <li>
+            @item.UserName @item.Email @item.AdminAccess
+            @if (item.AdminAccess)
+            {
+                <p>admin</p>
+            }
+        </li>
     }
 
 </ol>

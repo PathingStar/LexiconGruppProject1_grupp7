@@ -27,7 +27,7 @@ public class IdentityUserSevice(
             await userManager.AddToRoleAsync(user, roleName);
     }
 
-    public async Task<UserResultDto> CreateUserAsync(UserProfileDto user, string password, bool isAdmin)
+    public async Task<UserResultDto> CreateUserAsync(UserProfileDto user, string password)
     {
         var newApplicationUser = new ApplicationUser
         {
@@ -36,8 +36,8 @@ public class IdentityUserSevice(
 
         };
         var result = await userManager.CreateAsync(newApplicationUser, password);
-        if (isAdmin)
-            await AddRoleAsync(newApplicationUser, "Admin");
+        //if (isAdmin)
+        //    await AddRoleAsync(newApplicationUser, "Admin");
         return new UserResultDto(result.Errors.FirstOrDefault()?.Description);
     }
 
@@ -52,10 +52,16 @@ public class IdentityUserSevice(
         return users.Select(u => new AdminViewbleUserProfileDto(
         
             u.Id,
-             u.UserName,
-             u.Email)
+            u.UserName,
+            u.Email,
+            userManager.IsInRoleAsync(u, "Admin").Result
+            )
             
         ).ToArray();
+
+
+        //bool isUserInRole = await userManager.IsInRoleAsync(user, RoleName);
+
     }
 
     public async Task<UserResultDto> SignInAsync(string userName, string password)

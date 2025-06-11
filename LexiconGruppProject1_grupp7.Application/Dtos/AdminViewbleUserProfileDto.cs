@@ -9,7 +9,10 @@ namespace LexiconGruppProject1_grupp7.Application.Dtos
     public record AdminViewbleUserProfileDto(
         string UserId,
         string UserName,
-        string Email);
+        string Email,
+        bool isAdmin
+        );
+    
         
 
 }

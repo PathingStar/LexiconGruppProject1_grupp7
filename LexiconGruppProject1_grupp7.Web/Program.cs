@@ -51,7 +51,7 @@ public class Program
              (
                   "Test@mail.com",
                   "TestApp"
-             ), "testpassword", true);
+             ), "testpassword");
 
 
             //await IdentityDataSeeder.SeedAsync(services);
