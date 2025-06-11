@@ -8,6 +8,13 @@ using System.Security.Claims;
 namespace LexiconGruppProject1_grupp7.Web.Controllers;
 public class AccountController(IUserService userService) : Controller
 {
+
+    //[HttpGet("")]
+    //public IActionResult Index()
+    //{
+    //    return 
+    //}
+
     [HttpGet("login")]
     public IActionResult Login()
     {
@@ -30,13 +37,16 @@ public class AccountController(IUserService userService) : Controller
         return RedirectToAction(nameof(UserPage));
     }
 
+
     [Route("logout")]
     public async Task<IActionResult> LogOut()
     {
         await userService.SignOutAsync();
 
-        return RedirectToAction(nameof(StoriesController.Index));
+
+        return RedirectToAction(nameof(StoriesController.Index), nameof(StoriesController).Replace("Controller", String.Empty));
     }
+
 
     [HttpGet("register")]
     public async Task<IActionResult> Register()
