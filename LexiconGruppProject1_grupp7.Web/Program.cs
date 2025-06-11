@@ -53,13 +53,14 @@ public class Program
                   "TestApp"
              ), "testpassword");
 
+            var service2 = services.GetRequiredService<IIdentityUserService>();
+            ApplicationUser applicationUser = new ApplicationUser();
 
-            //await IdentityDataSeeder.SeedAsync(services);
+            //service2.CreateUserAsync(applicationUser)
         }
-
-        app.UseAuthorization();
-        app.UseStaticFiles();
-        app.MapControllers();
+            app.UseAuthorization();
+            app.UseStaticFiles();
+            app.MapControllers();
 
 
 

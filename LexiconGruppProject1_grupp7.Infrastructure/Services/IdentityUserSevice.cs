@@ -27,7 +27,7 @@ public class IdentityUserSevice(
             await userManager.AddToRoleAsync(user, roleName);
     }
 
-    public async Task<UserResultDto> CreateUserAsync(UserProfileDto user, string password)
+    public async Task<UserResultDto> CreateUserAsync(UserProfileDto user, string password, bool isAdmin)
     {
         var newApplicationUser = new ApplicationUser
         {

@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 namespace LexiconGruppProject1_grupp7.Application.Stories.Services;
 public class UserService(IIdentityUserService identityUserService) : IUserService
 {
-    public async Task<UserResultDto> CreateUserAsync(UserProfileDto user, string password)
+    public async Task<UserResultDto> CreateUserAsync(UserProfileDto user, string password, bool isAdmin=false)
     {
-        return await identityUserService.CreateUserAsync(user, password);
+        return await identityUserService.CreateUserAsync(user, password, isAdmin);
     }
 
     public async Task<UserProfileDto> GetUserByIdAsync(string userId)
