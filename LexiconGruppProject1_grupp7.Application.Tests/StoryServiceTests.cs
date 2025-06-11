@@ -22,11 +22,50 @@ namespace LexiconGruppProject1_grupp7.Application.Tests
             x.Title == "Test Story" &&
             x.Content == "This is a test story.")), Times.Once);
             work.Verify(o => o.PersistAsync(), Times.Once);
-
-
-
         }
-        
+
+        [Fact]
+        public async Task GetAllStoriesAsync_ShouldReturnAllStories()
+        {
+            Mock<IStoryRepository> repository = new Mock<IStoryRepository>();
+            Mock<IUnitOfWork> work = new Mock<IUnitOfWork>();
+            work.Setup(o => o.StoryRepository).Returns(repository.Object);
+            var storyService = new StoryService(work.Object);
+            repository.Setup(o => o.GetAllAsync()).ReturnsAsync(new Story[]
+            {
+                new Story { Id = 1, Title = "Test Story", Content = "This is a test story." },
+                new Story { Id = 2, Title = "Another Story", Content = "This is another test story." }
+            });
+            
+            var stories = await storyService.GetAllStoriesAsync();
+            Assert.NotNull(stories);
+            Assert.Equal(2, stories.Length);
+            Assert.Equal("Test Story", stories[0].Title);
+            Assert.Equal("This is a test story.", stories[0].Content);
+            Assert.Equal("Another Story", stories[1].Title);
+            Assert.Equal("This is another test story.", stories[1].Content);
+        }
+
+        [Fact]
+        public async Task GetStoryByIdAsync_ShouldReturnCorrectStory()
+        {
+            Mock<IStoryRepository> repository = new Mock<IStoryRepository>();
+            Mock<IUnitOfWork> work = new Mock<IUnitOfWork>();
+            work.Setup(o => o.StoryRepository).Returns(repository.Object);
+            var storyService = new StoryService(work.Object);
+
+            repository.Setup(o => o.GetByIdAsync(1)).ReturnsAsync(new Story { Id = 1, Title = "Test Story", Content = "This is a test story." });
+            
+            var story = await storyService.GetStoryByIdAsync(1);
+            Assert.NotNull(story);
+            Assert.Equal(1, story.Id);
+            Assert.Equal("Test Story", story.Title);
+            Assert.Equal("This is a test story.", story.Content);
+        }
+
+
 
     }
-}
+
+       
+    }
