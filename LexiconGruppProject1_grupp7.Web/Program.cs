@@ -1,4 +1,5 @@
 
+using LexiconGruppProject1_grupp7.Application.Dtos;
 using LexiconGruppProject1_grupp7.Application.Stories.Interfaces;
 using LexiconGruppProject1_grupp7.Application.Stories.Services;
 using LexiconGruppProject1_grupp7.Infrastructure.Presistance;
@@ -39,17 +40,28 @@ public class Program
 
 
         var app = builder.Build();
-        app.UseAuthorization();
-        app.UseStaticFiles();
-        app.MapControllers();
-
 
         // Kör seeding (en gång vid uppstart)
         using (var scope = app.Services.CreateScope())
         {
             var services = scope.ServiceProvider;
-            await IdentityDataSeeder.SeedAsync(services);
+            var service = services.GetRequiredService<IUserService>();
+            await service.CreateUserAsync(new UserProfileDto
+             (
+                  "Test@mail.com",
+                  "TestApp"
+             ), "testpassword", true);
+
+
+            //await IdentityDataSeeder.SeedAsync(services);
         }
+
+        app.UseAuthorization();
+        app.UseStaticFiles();
+        app.MapControllers();
+
+
+
 
         app.Run();
     }
