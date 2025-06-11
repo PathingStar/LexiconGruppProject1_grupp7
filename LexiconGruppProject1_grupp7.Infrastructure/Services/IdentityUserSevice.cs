@@ -15,6 +15,8 @@ public class IdentityUserSevice(
     SignInManager<ApplicationUser> signInManager)
     : IIdentityUserService
 {
+
+
     public async Task<UserResultDto> CreateUserAsync(UserProfileDto user, string password, bool isAdmin)
     {
         var result = await userManager.CreateAsync(new ApplicationUser
