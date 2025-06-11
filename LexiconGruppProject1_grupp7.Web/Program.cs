@@ -11,7 +11,7 @@ namespace LexiconGruppProject1_grupp7.Web;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public async static Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
         builder.Services.AddControllersWithViews();
@@ -42,6 +42,14 @@ public class Program
         app.UseAuthorization();
         app.UseStaticFiles();
         app.MapControllers();
+
+
+        // Kör seeding (en gång vid uppstart)
+        using (var scope = app.Services.CreateScope())
+        {
+            var services = scope.ServiceProvider;
+            await IdentityDataSeeder.SeedAsync(services);
+        }
 
         app.Run();
     }
