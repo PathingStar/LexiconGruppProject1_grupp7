@@ -27,9 +27,16 @@ public class AccountController(IUserService userService) : Controller
         {
             return View();
         }
-        return RedirectToAction(nameof(User));
+        return RedirectToAction(nameof(UserPage));
     }
 
+    [Route("logout")]
+    public async Task<IActionResult> LogOut()
+    {
+        await userService.SignOutAsync();
+
+        return RedirectToAction(nameof(StoriesController.Index));
+    }
 
     [HttpGet("register")]
     public async Task<IActionResult> Register()

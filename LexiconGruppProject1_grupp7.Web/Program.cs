@@ -33,10 +33,9 @@ public class Program
         }).AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
 
         builder.Services.ConfigureApplicationCookie(o => o.LoginPath = "/login");
+        builder.Services.ConfigureApplicationCookie(o => o.LogoutPath = "");
 
         builder.Services.AddDbContext<ApplicationContext>(o => o.UseSqlServer(connString));
-
-
 
 
         var app = builder.Build();

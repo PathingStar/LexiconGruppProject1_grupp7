@@ -39,4 +39,8 @@ public class IdentityUserSevice(
         return new UserResultDto(result.Succeeded ? null : "Invalid user credentials");
     }
 
+    public async Task SignOutAsync()
+    {
+        await signInManager.SignOutAsync();
+    }
 }

@@ -24,4 +24,9 @@ public class UserService(IIdentityUserService identityUserService) : IUserServic
     {
         return await identityUserService.SignInAsync(userName, password);
     }
+
+    public async Task SignOutAsync()
+    {
+        await identityUserService.SignOutAsync();
+    }
 }
