@@ -12,13 +12,18 @@ using System.Threading.Tasks;
 
 namespace LexiconGruppProject1_grupp7.Infrastructure.Presistance;
 
-public class ApplicationContext(DbContextOptions<ApplicationContext> options) : IdentityDbContext<ApplicationUser, IdentityRole, string>(options)
+public class ApplicationContext(DbContextOptions<ApplicationContext> options ) : IdentityDbContext<ApplicationUser, IdentityRole, string>(options)
 {
     public DbSet<Story> Stories { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        const string RoleName = "Administrator";
+
+
+
 
         modelBuilder.Entity<Story>()
             .Property(e => e.Title)

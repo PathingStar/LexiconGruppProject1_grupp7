@@ -12,20 +12,32 @@ namespace LexiconGruppProject1_grupp7.Infrastructure.Services;
 
 public class IdentityUserSevice(
     UserManager<ApplicationUser> userManager,
-    SignInManager<ApplicationUser> signInManager)
+    SignInManager<ApplicationUser> signInManager,
+    RoleManager<IdentityRole> roleManager)
     : IIdentityUserService
 {
+    public async Task AddRoleAsync(ApplicationUser user, string roleName)
+    {
+        // Skapa en ny roll
+        if (!await roleManager.RoleExistsAsync(roleName))
+            await roleManager.CreateAsync(new IdentityRole(roleName));
 
+        // Lägg till en användare till en roll
+        //if (addUserToRole)
+            await userManager.AddToRoleAsync(user, roleName);
+    }
 
     public async Task<UserResultDto> CreateUserAsync(UserProfileDto user, string password, bool isAdmin)
     {
-        var result = await userManager.CreateAsync(new ApplicationUser
+        var newApplicationUser = new ApplicationUser
         {
             UserName = user.UserName,
             Email = user.Email,
 
-        }, password);
-
+        };
+        var result = await userManager.CreateAsync(newApplicationUser, password);
+        if (isAdmin)
+            await AddRoleAsync(newApplicationUser, "Admin");
         return new UserResultDto(result.Errors.FirstOrDefault()?.Description);
     }
 

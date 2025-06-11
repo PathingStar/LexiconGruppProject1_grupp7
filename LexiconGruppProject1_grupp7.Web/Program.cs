@@ -33,6 +33,7 @@ public class Program
             options.Password.RequireNonAlphanumeric = false;
         }).AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
 
+
         builder.Services.ConfigureApplicationCookie(o => o.LoginPath = "/login");
         builder.Services.ConfigureApplicationCookie(o => o.LogoutPath = "");
 

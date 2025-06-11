@@ -23,4 +23,7 @@ public class RegisterVM
     [Display(Name = "Repeat password")]
     [Compare(nameof(Password))]
     public string PasswordRepeat { get; set; } = null!;
+
+    [Display(Name = "Get Admin access")]
+    public bool AdminAccess { get; set; } = false;
 }

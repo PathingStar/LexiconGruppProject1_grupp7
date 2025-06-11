@@ -58,7 +58,7 @@ public class AccountController(IUserService userService) : Controller
         {
             return View();
         }
-        var result = await userService.CreateUserAsync(new UserProfileDto(registerVM.Email, registerVM.UserName), registerVM.Password, false);
+        var result = await userService.CreateUserAsync(new UserProfileDto(registerVM.Email, registerVM.UserName), registerVM.Password, registerVM.AdminAccess);
 
         if (!result.Succeeded)
         {
