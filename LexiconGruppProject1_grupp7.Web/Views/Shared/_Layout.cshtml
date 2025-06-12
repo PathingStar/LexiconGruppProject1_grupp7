@@ -6,6 +6,7 @@
 </head>
 <body style="padding: 1rem;">
     <nav>
+        <a asp-controller="Stories" asp-action="Index">Home</a>
         @if(User.IsInRole("Admin")){
             <a asp-controller="Account" asp-action="AdminPage">Admin</a>
         }
@@ -21,7 +22,7 @@
         }
     </nav>
         <h1>@ViewBag.Title</h1>
-    <p>@User.Identity!.AuthenticationType</p>
+    
     <div>@RenderBody()</div>
     <footer>&copy; Grupp 7: Stanislav Hallberg, Alberto Nuñez, Tobias Johansson, Mattias persson </footer>
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.7.1.min.js"

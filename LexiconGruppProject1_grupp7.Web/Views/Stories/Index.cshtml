@@ -14,4 +14,7 @@
     
         
 </ul>
-<a asp-controller="Stories" asp-action="Create">Create New Story</a>
+@if (User.Identity!.IsAuthenticated)
+{
+    <a asp-controller="Stories" asp-action="Create">Create New Story</a>
+}
