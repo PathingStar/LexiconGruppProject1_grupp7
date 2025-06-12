@@ -51,10 +51,10 @@ public class Program
              (
                   "Test@mail.com",
                   "TestApp"
-             ), "testpassword");
+             ), "testpassword", true);
 
-            var service2 = services.GetRequiredService<IIdentityUserService>();
-            ApplicationUser applicationUser = new ApplicationUser();
+            //var service2 = services.GetRequiredService<IIdentityUserService>();
+            //ApplicationUser applicationUser = new ApplicationUser();
 
             //service2.CreateUserAsync(applicationUser)
         }

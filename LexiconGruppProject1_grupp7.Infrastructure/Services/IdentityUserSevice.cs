@@ -16,6 +16,11 @@ public class IdentityUserSevice(
     RoleManager<IdentityRole> roleManager)
     : IIdentityUserService
 {
+    public async Task AddRoleAsync(string userId, string rolename)
+    {
+        var applicationUser = await userManager.FindByIdAsync(userId);
+        AddRoleAsync(applicationUser, rolename);
+    }
     public async Task AddRoleAsync(ApplicationUser user, string roleName)
     {
         // Skapa en ny roll
@@ -27,17 +32,23 @@ public class IdentityUserSevice(
             await userManager.AddToRoleAsync(user, roleName);
     }
 
+    public async Task RemoveRoleAsync(string userId, string roleName)
+    {
+        var applicationUser = await userManager.FindByIdAsync(userId);
+        await userManager.RemoveFromRoleAsync(applicationUser, roleName);
+    }
+
     public async Task<UserResultDto> CreateUserAsync(UserProfileDto user, string password, bool isAdmin)
     {
         var newApplicationUser = new ApplicationUser
         {
             UserName = user.UserName,
             Email = user.Email,
-
         };
         var result = await userManager.CreateAsync(newApplicationUser, password);
-        //if (isAdmin)
-        //    await AddRoleAsync(newApplicationUser, "Admin");
+        if (isAdmin)
+            await AddRoleAsync(newApplicationUser, "Admin");
+            
         return new UserResultDto(result.Errors.FirstOrDefault()?.Description);
     }
 
