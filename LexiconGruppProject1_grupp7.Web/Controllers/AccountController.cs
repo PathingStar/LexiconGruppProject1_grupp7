@@ -24,6 +24,13 @@ public class AccountController(IUserService userService) : Controller
         {
             return View();
         }
+        if(loginVM.UserName == null || loginVM.Password == null)
+        {
+            ModelState.AddModelError(string.Empty, "Username and password cannot be empty.");
+            return View();
+        }
+       
+
 
         var result = await userService.SignInAsync(loginVM.UserName, loginVM.Password);
         if (!result.Succeeded)
@@ -55,6 +62,11 @@ public class AccountController(IUserService userService) : Controller
     {
         if (!ModelState.IsValid)
         {
+            return View();
+        }
+        if(registerVM.Password!= registerVM.PasswordRepeat)
+        {
+            ModelState.AddModelError(string.Empty, "Passwords do not match");
             return View();
         }
         var result = await userService.CreateUserAsync(new UserProfileDto(registerVM.Email, registerVM.UserName), registerVM.Password);
