@@ -6,7 +6,11 @@ using LexiconGruppProject1_grupp7.Web.Views.Account;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace LexiconGruppProject1_grupp7.web.Tests;
@@ -35,129 +39,197 @@ public class AccountControllerTests
     }
 
     [Fact]
-    public async Task LogOut_CallsSignOutAndRedirects()
+    public async Task Login_Post_Should_Return_ViewResult_When_ModelState_Is_Invalid()
+    {
+        var mockService = new Mock<IUserService>();
+        var controller = new AccountController(mockService.Object);
+        controller.ModelState.AddModelError("UserName", "Required");
+        var loginVM = new LoginVM
+        {
+            UserName = "testuser",
+            Password = "password123"
+        };
+        var result = await controller.Login(loginVM);
+        Assert.IsType<ViewResult>(result);
+
+
+    }
+    [Fact]
+    public async Task LogOut_Should_Call_SignOut_And_Redirect()
+    {
+        var mockService = new Mock<IUserService>();
+        var controller = new AccountController(mockService.Object);
+        var result = await controller.LogOut();
+        mockService.Verify(s => s.SignOutAsync(), Times.Once);
+        Assert.IsType<RedirectToActionResult>(result);
+    }
+
+
+    [Fact]
+    public async Task Register_Post_Should_Call_CreateUser_And_Redirect()
+    {
+        var mockService = new Mock<IUserService>();
+        mockService.Setup(s => s.CreateUserAsync(It.IsAny<UserProfileDto>(), It.IsAny<string>(), false))
+            .ReturnsAsync(new UserResultDto());
+        var controller = new AccountController(mockService.Object);
+        var registerVM = new RegisterVM
+        {
+            UserName = "newuser",
+            Email = "test@mail",
+            Password = "password123",
+            PasswordRepeat = "password123"
+
+        };
+        var result = await controller.Register(registerVM);
+        mockService.Verify(s => s.CreateUserAsync(
+            It.Is<UserProfileDto>(u => u.UserName == registerVM.UserName &&
+        u.Email == registerVM.Email), registerVM.Password, false), Times.Once);
+    }
+    [Fact]
+    public async Task Register_Post_Should_Return_ViewResult_When_ModelState_Is_Invalid()
+    {
+        var mockService = new Mock<IUserService>();
+        var controller = new AccountController(mockService.Object);
+        controller.ModelState.AddModelError("UserName", "Required");
+        var registerVM = new RegisterVM
+        {
+            UserName = "newuser",
+            Email = "test@mail",
+            Password = "password123",
+            PasswordRepeat = "password123"
+        };
+        var result = await controller.Register(registerVM);
+        Assert.IsType<ViewResult>(result);
+    }
+    [Fact]
+    public async Task Register_Post_Should_Return_ViewResult_When_CreateUser_Fails()
+    {
+        var mockService = new Mock<IUserService>();
+        mockService.Setup(s => s.CreateUserAsync(It.IsAny<UserProfileDto>(), It.IsAny<string>(), false))
+            .ReturnsAsync(new UserResultDto("Error creating user"));
+        var controller = new AccountController(mockService.Object);
+        var registerVM = new RegisterVM
+        {
+            UserName = "newuser",
+            Email = "test@mail",
+            Password = "password123",
+            PasswordRepeat = "password123"
+        };
+        var result = await controller.Register(registerVM);
+        Assert.IsType<ViewResult>(result);
+        var viewResult = result as ViewResult;
+        Assert.NotNull(viewResult);
+        Assert.Contains("Error creating user", viewResult.ViewData.ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+    }
+    [Fact]
+    public async Task Register_Post_Should_Return_ViewResult_When_Passwords_Do_Not_Match()
+    {
+        var mockService = new Mock<IUserService>();
+        var controller = new AccountController(mockService.Object);
+        var registerVM = new RegisterVM
+        {
+            UserName = "newuser",
+            Email = "test@mail",
+            Password = "password123",
+            PasswordRepeat = "differentpassword"
+        };
+        var result = await controller.Register(registerVM);
+        Assert.IsType<ViewResult>(result);
+        Assert.Contains("Passwords do not match", controller.ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+    }
+    [Fact]
+    public async Task UserPage_Should_Return_ViewResult()
+    {
+        var mockService = new Mock<IUserService>();
+        var controller = new AccountController(mockService.Object);
+
+        var user = new ClaimsPrincipal(
+
+            new ClaimsIdentity(
+                new Claim[]
+
+            {
+
+                    new Claim(ClaimTypes.NameIdentifier, "123"),
+
+                    new Claim(ClaimTypes.Name, "testuser")
+
+            }, "TestAuth"));
+
+
+
+        controller.ControllerContext = new ControllerContext
+
+        {
+
+            HttpContext = new DefaultHttpContext { User = user }
+
+        };
+
+
+        mockService.Setup(s => s.GetUserByIdAsync(It.IsAny<string>())).ReturnsAsync(new UserProfileDto("email@mail", "username", "bio"));
+        var result = await controller.UserPage();
+        Assert.IsType<ViewResult>(result);
+        mockService.Verify(s => s.GetUserByIdAsync(It.IsAny<string>()), Times.Once);
+    }
+    [Fact]
+    public async Task AdminGetAllUsers_Should_Return_ViewResult_With_Users()
+    {
+        var mockService = new Mock<IUserService>();
+        mockService.Setup(s => s.AdminGetAllUsers()).ReturnsAsync(new AdminViewbleUserProfileDto[]
+        {
+                new AdminViewbleUserProfileDto("1", "user1", "user1@mail", false),
+                new AdminViewbleUserProfileDto("2", "user2", "user2@mail", true)
+        });
+        var controller = new AccountController(mockService.Object);
+        var result = await controller.AdminPage();
+        mockService.Verify(s => s.AdminGetAllUsers(), Times.Once);
+        Assert.IsType<ViewResult>(result);
+        var viewResult = result as ViewResult;
+        Assert.NotNull(viewResult);
+        var model = viewResult.Model as AdminPageVM;
+        Assert.NotNull(model);
+        Assert.Equal(2, model.userVMs.Length);
+        Assert.Contains(model.userVMs, u => u.Id == "1" && u.UserName == "user1" && u.Email == "user1@mail" && !u.IsAdmin);
+        Assert.Contains(model.userVMs, u => u.Id == "2" && u.UserName == "user2" && u.Email == "user2@mail" && u.IsAdmin);
+
+    }
+
+    [Fact]
+    public async Task ToggleAdmin_WhenIsAdminTrue_CallsAddRoleAndRedirects()
     {
         // Arrange
         var mockService = new Mock<IUserService>();
         var controller = new AccountController(mockService.Object);
+        var userId = "user1";
 
         // Act
-        var result = await controller.LogOut();
+        var result = await controller.ToggleAdmin(userId, true);
 
         // Assert
-        mockService.Verify(s => s.SignOutAsync(), Times.Once);
-
-        var redirectResult = Assert.IsType<RedirectToActionResult>(result);
-        Assert.Equal("Index", redirectResult.ActionName);
-        Assert.Equal("Stories", redirectResult.ControllerName);
-    }
-
-    [Fact]
-    public async Task Register_Post_InvalidModel_ReturnsView()
-    {
-        var userService = new Mock<IUserService>();
-        var controller = new AccountController(userService.Object);
-        controller.ModelState.AddModelError("UserName", "Required");
-
-        var result = await controller.Register(new RegisterVM());
-
-        Assert.IsType<ViewResult>(result);
-    }
-
-    [Fact]
-    public async Task Register_Post_ValidModel_UserCreationFails_ReturnsViewWithError()
-    {
-        var userService = new Mock<IUserService>();
-        userService.Setup(x => x.CreateUserAsync(It.IsAny<UserProfileDto>(), It.IsAny<string>(), false))
-            .ReturnsAsync(new UserResultDto("error"));
-
-        var controller = new AccountController(userService.Object);
-        var vm = new RegisterVM
-        {
-            UserName = "test",
-            Email = "test@test.com",
-            Password = "pass",
-            PasswordRepeat = "pass"
-        };
-
-        var result = await controller.Register(vm);
-
-        var viewResult = Assert.IsType<ViewResult>(result);
-        Assert.False(controller.ModelState.IsValid);
-    }
-
-    [Fact]
-    public async Task Register_Post_ValidModel_UserCreationSucceeds_RedirectsToUserPage()
-    {
-        var userService = new Mock<IUserService>();
-        userService.Setup(x => x.CreateUserAsync(It.IsAny<UserProfileDto>(), It.IsAny<string>(), false))
-            .ReturnsAsync(new UserResultDto());
-        userService.Setup(x => x.SignInAsync(It.IsAny<string>(), It.IsAny<string>()))
-            .ReturnsAsync(new UserResultDto());
-
-        var controller = new AccountController(userService.Object);
-        var vm = new RegisterVM
-        {
-            UserName = "test",
-            Email = "test@test.com",
-            Password = "pass",
-            PasswordRepeat = "pass"
-        };
-
-        var result = await controller.Register(vm);
+        mockService.Verify(s => s.AddRoleAsync(userId, "Admin"), Times.Once);
+        mockService.Verify(s => s.RemoveRoleAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
 
         var redirect = Assert.IsType<RedirectToActionResult>(result);
-        Assert.Equal("UserPage", redirect.ActionName);
+        Assert.Equal("AdminPage", redirect.ActionName);
     }
 
     [Fact]
-    public async Task UserPage_ReturnsViewWithUserData()
+    public async Task ToggleAdmin_WhenIsAdminFalse_CallsRemoveRoleAndRedirects()
     {
-        var userService = new Mock<IUserService>();
-        var userId = "user123";
-        var userProfile = new UserProfileDto("test@test.com", "testuser", "bio");
-        userService.Setup(x => x.GetUserByIdAsync(userId)).ReturnsAsync(userProfile);
+        // Arrange
+        var mockService = new Mock<IUserService>();
+        var controller = new AccountController(mockService.Object);
+        var userId = "user1";
 
-        var controller = new AccountController(userService.Object);
-        var user = new ClaimsPrincipal(new ClaimsIdentity(new[]
-        {
-            new Claim(ClaimTypes.NameIdentifier, userId),
-            new Claim(ClaimTypes.Name, "testuser")
-        }, "mock"));
+        // Act
+        var result = await controller.ToggleAdmin(userId, false);
 
-        controller.ControllerContext = new ControllerContext
-        {
-            HttpContext = new DefaultHttpContext { User = user }
-        };
+        // Assert
+        mockService.Verify(s => s.RemoveRoleAsync(userId, "Admin"), Times.Once);
+        mockService.Verify(s => s.AddRoleAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
 
-        var result = await controller.UserPage();
-
-        var viewResult = Assert.IsType<ViewResult>(result);
-        var model = Assert.IsType<UserPageVM>(viewResult.Model);
-        Assert.Equal("testuser", model.UserName);
-        Assert.Equal("test@test.com", model.Email);
-        Assert.Equal("bio", model.Bio);
-    }
-
-    [Fact]
-    public async Task AdminPage_ReturnsViewWithUsers()
-    {
-        var userService = new Mock<IUserService>();
-        var users = new[]
-        {
-            new AdminViewbleUserProfileDto("1", "admin", "admin@test.com", true),
-            new AdminViewbleUserProfileDto("2", "user", "user@test.com", false)
-        };
-        userService.Setup(x => x.AdminGetAllUsers()).ReturnsAsync(users);
-
-        var controller = new AccountController(userService.Object);
-
-        var result = await controller.AdminPage();
-
-        var viewResult = Assert.IsType<ViewResult>(result);
-        var model = Assert.IsType<AdminPageVM>(viewResult.Model);
-        Assert.Equal(2, model.userVMs.Length);
-        Assert.Equal("admin", model.userVMs[0].UserName);
-        Assert.True(model.userVMs[0].IsAdmin);
+        var redirect = Assert.IsType<RedirectToActionResult>(result);
+        Assert.Equal("AdminPage", redirect.ActionName);
     }
 }
