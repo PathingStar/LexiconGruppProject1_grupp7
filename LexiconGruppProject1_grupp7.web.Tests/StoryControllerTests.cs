@@ -63,7 +63,7 @@ namespace LexiconGruppProject1_grupp7.web.Tests
             mockService.Setup(s => s.AddStoryAsync(It.IsAny<Story>()));
             var controller = new StoriesController(mockService.Object);
 
-            await controller.Create(new CreateVM
+            var resturn = await controller.Create(new CreateVM
             {
                 StoryTitle = "Story 1",
                 StoryContent = "Content 1"
@@ -73,6 +73,8 @@ namespace LexiconGruppProject1_grupp7.web.Tests
                 It.Is<Story>(x=>
                 x.Title == "Story 1" &&
                 x.Content == "Content 1")), Times.Once);
+
+            Assert.IsType<RedirectToActionResult>(resturn);
         }
     }
 }
