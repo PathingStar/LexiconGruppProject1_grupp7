@@ -4,6 +4,7 @@ using LexiconGruppProject1_grupp7.Web.Views.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Security.Claims;
 
@@ -83,7 +84,7 @@ public class AccountController(IUserService userService) : Controller
 
         return View(viewModel);
     }
-    [Authorize]  
+    [Authorize]
     [Authorize(Roles = "Admin")]
     [HttpGet("admin")]
     public async Task<IActionResult> AdminPage()
@@ -105,7 +106,26 @@ public class AccountController(IUserService userService) : Controller
     [HttpPost("admin")]
     public async Task<IActionResult> AdminPage(AdminPageVM adminPageVM)
     {
-        
+
+        return RedirectToAction(nameof(AdminPage));
+
+    }
+    [HttpPost("admin/toggleadmin")]
+    public async Task<IActionResult> ToggleAdmin(string userId, bool isAdmin)
+    {
+
+        if (isAdmin)
+        {
+
+            await userService.AddRoleAsync(userId, "Admin");
+        }
+        else
+        {
+            await userService.RemoveRoleAsync(userId, "Admin");
+
+        }
+
         return RedirectToAction(nameof(AdminPage));
     }
+
 }

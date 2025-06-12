@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace LexiconGruppProject1_grupp7.Application.Stories.Services;
 public class UserService(IIdentityUserService identityUserService) : IUserService
 {
-    public async Task<UserResultDto> CreateUserAsync(UserProfileDto user, string password, bool isAdmin=false)
+    public async Task<UserResultDto> CreateUserAsync(UserProfileDto user, string password, bool isAdmin = false)
     {
         return await identityUserService.CreateUserAsync(user, password, isAdmin);
     }
@@ -29,7 +29,14 @@ public class UserService(IIdentityUserService identityUserService) : IUserServic
     {
         await identityUserService.SignOutAsync();
     }
-    public async Task<AdminViewbleUserProfileDto[]> AdminGetAllUsers()    {
+    public async Task<AdminViewbleUserProfileDto[]> AdminGetAllUsers()
+    {
         return await identityUserService.AdminGetAllUsers();
     }
+
+    public async Task AddRoleAsync(string userId, string v) =>
+        await identityUserService.AddRoleAsync(userId, v);
+
+    public async Task RemoveRoleAsync(string userId, string v) =>
+        await identityUserService.RemoveRoleAsync(userId, v);
 }

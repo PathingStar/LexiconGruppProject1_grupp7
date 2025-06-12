@@ -19,7 +19,7 @@ public class IdentityUserSevice(
     public async Task AddRoleAsync(string userId, string rolename)
     {
         var applicationUser = await userManager.FindByIdAsync(userId);
-        AddRoleAsync(applicationUser, rolename);
+        await AddRoleAsync(applicationUser, rolename);
     }
     public async Task AddRoleAsync(ApplicationUser user, string roleName)
     {
@@ -29,8 +29,9 @@ public class IdentityUserSevice(
 
         // Lägg till en användare till en roll
         //if (addUserToRole)
-            await userManager.AddToRoleAsync(user, roleName);
+        await userManager.AddToRoleAsync(user, roleName);
     }
+
 
     public async Task RemoveRoleAsync(string userId, string roleName)
     {
@@ -48,7 +49,7 @@ public class IdentityUserSevice(
         var result = await userManager.CreateAsync(newApplicationUser, password);
         if (isAdmin)
             await AddRoleAsync(newApplicationUser, "Admin");
-            
+
         return new UserResultDto(result.Errors.FirstOrDefault()?.Description);
     }
 
@@ -57,17 +58,17 @@ public class IdentityUserSevice(
         var applicationUser = await userManager.FindByIdAsync(userId);
         return new UserProfileDto(applicationUser.Email, applicationUser.UserName, applicationUser.Bio);
     }
-    public async Task<AdminViewbleUserProfileDto[]> AdminGetAllUsers() 
+    public async Task<AdminViewbleUserProfileDto[]> AdminGetAllUsers()
     {
-        var users =  userManager.Users.ToArray();
+        var users = userManager.Users.ToArray();
         return users.Select(u => new AdminViewbleUserProfileDto(
-        
+
             u.Id,
             u.UserName,
             u.Email,
             userManager.IsInRoleAsync(u, "Admin").Result
             )
-            
+
         ).ToArray();
 
 

@@ -8,12 +8,17 @@
     {
         <li>
             @item.UserName @item.Email 
-            <form asp-controller="Account" asp-action="AdminAccess">
-                <label asp-for="IsAdmin"></label>
-                <input asp-for="IsAdmin" />
-                <span asp-validation-for="IsAdmin"></span>
+            <form asp-controller="Account" asp-action="ToggleAdmin" method="post">
+                <input type="hidden" name="userId" value="@item.Id" />
+
+                <input type="checkbox"
+                       name="isAdmin"
+                       value="true"
+                @(item.IsAdmin ? "checked" : "")
+                       onchange="this.form.submit()" />
             </form>
         </li>
+        <p>IS ADMIN: @item.IsAdmin</p>
     }
     
 </ol>

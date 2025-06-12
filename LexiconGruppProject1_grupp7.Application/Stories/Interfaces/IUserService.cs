@@ -13,4 +13,6 @@ public interface IUserService
     Task<UserResultDto> SignInAsync(string userName, string password);
     Task SignOutAsync();
     Task<AdminViewbleUserProfileDto[]> AdminGetAllUsers();
+    Task AddRoleAsync(string userId, string v);
+    Task RemoveRoleAsync(string userId, string v);
 }

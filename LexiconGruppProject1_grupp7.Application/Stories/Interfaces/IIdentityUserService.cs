@@ -13,4 +13,6 @@ public interface IIdentityUserService
     Task<UserResultDto> SignInAsync(string userName, string password);
     Task SignOutAsync();
     Task<AdminViewbleUserProfileDto[]> AdminGetAllUsers();
+    Task RemoveRoleAsync(string userId, string roleName);
+    Task AddRoleAsync(string userId, string rolename);
 }
