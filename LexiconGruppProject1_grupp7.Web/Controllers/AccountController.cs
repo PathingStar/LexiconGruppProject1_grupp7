@@ -10,9 +10,6 @@ using System.Security.Claims;
 namespace LexiconGruppProject1_grupp7.Web.Controllers;
 public class AccountController(IUserService userService) : Controller
 {
-
-    
-
     [HttpGet("login")]
     public IActionResult Login()
     {
@@ -99,9 +96,16 @@ public class AccountController(IUserService userService) : Controller
                 Id = u.UserId,
                 UserName = u.UserName,
                 Email = u.Email,
-                AdminAccess = u.isAdmin
+                IsAdmin = u.isAdmin
             }).ToArray()
         };
         return View(adminPageVM);
+    }
+
+    [HttpPost("admin")]
+    public async Task<IActionResult> AdminPage(AdminPageVM adminPageVM)
+    {
+        
+        return RedirectToAction(nameof(AdminPage));
     }
 }

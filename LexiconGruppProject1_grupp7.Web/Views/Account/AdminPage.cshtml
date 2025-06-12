@@ -3,16 +3,18 @@
     ViewBag.Title = "Admin Page";
 }
 <ol>
+    
     @foreach (var item in Model.userVMs)
     {
         <li>
-            @item.UserName @item.Email @item.AdminAccess
-            @if (item.AdminAccess)
-            {
-                <p>admin</p>
-            }
+            @item.UserName @item.Email 
+            <form asp-controller="Account" asp-action="AdminAccess">
+                <label asp-for="IsAdmin"></label>
+                <input asp-for="IsAdmin" />
+                <span asp-validation-for="IsAdmin"></span>
+            </form>
         </li>
     }
-
+    
 </ol>
 
