@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using LexiconGruppProject1_grupp7.Application.Dtos;
 using LexiconGruppProject1_grupp7.Application.Stories.Interfaces;
 using LexiconGruppProject1_grupp7.Application.Stories.Services;
 using LexiconGruppProject1_grupp7.Domain.Entities;
@@ -6,6 +6,7 @@ using LexiconGruppProject1_grupp7.Web.Controllers;
 using LexiconGruppProject1_grupp7.Web.Views.Stories;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System.Collections.Generic;
 namespace LexiconGruppProject1_grupp7.web.Tests
 {
     public class StoryControllerTests
@@ -22,10 +23,6 @@ namespace LexiconGruppProject1_grupp7.web.Tests
 
         }
         ));
-            
-
-        
-
 
             var controller = new StoriesController(mockService.Object);
 
@@ -39,6 +36,56 @@ namespace LexiconGruppProject1_grupp7.web.Tests
             Assert.Equal(2, model.StoryItems.Length);
             Assert.Contains(model.StoryItems, s => s.StoryId == 1 && s.StoryTitle == "Story 1");
             Assert.Contains(model.StoryItems, s => s.StoryId == 2 && s.StoryTitle == "Story 2");
+        }
+
+        [Fact]
+        public async Task Details_ReturnsViewWithCorrectModel_WhenStoryExists()
+        {
+            var mockService = new Mock<IStoryService>();
+            mockService.Setup(s => s.GetStoryByIdAsync(1)).Returns(Task.FromResult(
+                new Story { Title = "Story 1", Content = "Content 1" }
+            ));
+            var controller = new StoriesController(mockService.Object);
+
+            var result = await controller.Details(1);
+
+            var viewResult = Assert.IsType<ViewResult>(result);
+            var model = Assert.IsType<DetailsVM>(viewResult.Model);
+
+            Assert.Equal("Story 1", model.StoryTitle);
+            Assert.Equal("Content 1", model.StoryContent);
+        }
+
+        [Fact]
+        public async Task Create()
+        {
+            var mockService = new Mock<IStoryService>();
+            mockService.Setup(s => s.AddStoryAsync(It.IsAny<CreateVM>())).Returns(Task.CompletedTask);
+
+            
+
+                new Story
+                {
+                    Title = "Story 1",
+                    Content = "Content 1"
+                }
+            var controller = new StoriesController(mockService.Object);
+
+            await controller.Create(new CreateVM
+            {
+
+            })
+
+            //var response = mockService.Object.AddStoryAsync(new Story { Title = "Story 1", Content = "Content 1" });
+
+            //mockService.Verify(o=>o.AddStoryAsync(
+            //    It.Is<Story>(s=>
+            //        s.Title == "Story 1" &&
+            //        s.Content == "Content 1"
+            //    )),Times.Once);
+            //Assert.NotNull(response);
+
+
         }
     }
 }
