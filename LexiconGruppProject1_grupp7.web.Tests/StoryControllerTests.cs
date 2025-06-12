@@ -57,35 +57,22 @@ namespace LexiconGruppProject1_grupp7.web.Tests
         }
 
         [Fact]
-        public async Task Create()
+        public async Task Create_CallsAddStoryAsync_WithCorrectStoryData()
         {
             var mockService = new Mock<IStoryService>();
-            mockService.Setup(s => s.AddStoryAsync(It.IsAny<CreateVM>())).Returns(Task.CompletedTask);
-
-            
-
-                new Story
-                {
-                    Title = "Story 1",
-                    Content = "Content 1"
-                }
+            mockService.Setup(s => s.AddStoryAsync(It.IsAny<Story>()));
             var controller = new StoriesController(mockService.Object);
 
             await controller.Create(new CreateVM
             {
+                StoryTitle = "Story 1",
+                StoryContent = "Content 1"
+            });
 
-            })
-
-            //var response = mockService.Object.AddStoryAsync(new Story { Title = "Story 1", Content = "Content 1" });
-
-            //mockService.Verify(o=>o.AddStoryAsync(
-            //    It.Is<Story>(s=>
-            //        s.Title == "Story 1" &&
-            //        s.Content == "Content 1"
-            //    )),Times.Once);
-            //Assert.NotNull(response);
-
-
+            mockService.Verify(o => o.AddStoryAsync(
+                It.Is<Story>(x=>
+                x.Title == "Story 1" &&
+                x.Content == "Content 1")), Times.Once);
         }
     }
 }
