@@ -16,7 +16,7 @@ namespace LexiconGruppProject1_grupp7.web.Tests
     public class AccountControllerTests
     {
         [Fact]
-        public async Task LoginPostTEst()
+        public async Task Login_Post_Should_Call_SignIn_And_Redirect()
         {
             var mockService = new Mock<IUserService>();
             mockService.Setup(s => s.SignInAsync(It.IsAny<string>(), It.IsAny<string>()))
